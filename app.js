@@ -9,3 +9,5 @@ let period;
 alert('Привет, как дела? я учу GIT');
 
 console.log('Сообщение в консоле');
+
+alert('Hello')
