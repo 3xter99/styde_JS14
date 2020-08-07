@@ -1,17 +1,21 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let period;
-//
+// 1)
+let money = 100000;
+let income = 'Менеджер по продажам';
+let addExpenses = "аренда, связь, курсы, фастфуд";
+let deposit = true;
+let mission = 350000;
+let period = 9;
 
-alert('Привет, как дела? я учу GIT');
+// 2)
 
-console.log('Сообщение в консоле');
+console.log(typeof money);
+console.log(typeof income);
+console.log(typeof deposit);
+console.log(addExpenses.length);
+console.log(`Период равен ${period} месяцев`);
+console.log(`Цель заработать ${mission} рублей`);
+console.log(addExpenses.toUpperCase().split(','));
 
-alert('Hello')
-const obj = {
-    0: 'Djdf',
-    1: 'gtnz'
-}
+const budgetDay = money / 30
+console.log(budgetDay);
+
