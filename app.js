@@ -1,9 +1,9 @@
 'use strict'
 // 1)
-let money = 100000;
+let money = +prompt('Ваш месячный доход?')
 let income = 'Менеджер по продажам';
-let addExpenses = "аренда, связь, курсы, фастфуд";
-let deposit = true;
+let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую')
+let deposit = confirm('Есть ли у вас депозит в банке?')
 let mission = 350000;
 let period = 9;
 
@@ -15,17 +15,14 @@ console.log(typeof deposit);
 console.log(addExpenses.length);
 console.log(`Период равен ${period} месяцев`);
 console.log(`Цель заработать ${mission} рублей`);
-console.log(addExpenses.toLowerCase().split(', '));
+console.log(addExpenses.toLowerCase().split(','));
 
 let budgetDay = money / 30
 // console.log(budgetDay);
 
 //___________Lesson 3___________
-money = +prompt('Ваш месячный доход?')
 
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую')
 
-deposit = confirm('Есть ли у вас депозит в банке?')
 let expenses1 = prompt('Введите обязательную статью расходов?')
 let amount1 = +prompt('Во сколько это обойдется?')
 let expenses2 = prompt('Введите обязательную статью расходов?')
