@@ -14,7 +14,7 @@ let expenses2 = prompt('Введите обязательную статью р�
 let amount2 = +prompt('Во сколько это обойдется?','20000')
 // lesson04
 
-let showTypeOf = function(data) {
+const showTypeOf = function(data) {
     console.log(data, typeof(data))
 }
 
@@ -26,7 +26,7 @@ function getAccumulatedMonth() {
     return money - getExpensesMonth()
 }
 
-let accumulatedMonth = getAccumulatedMonth()
+const accumulatedMonth = getAccumulatedMonth()
 
 function getTargetMonth() {
     return Math.ceil(mission / accumulatedMonth)
@@ -48,7 +48,7 @@ console.log(`Цель будет достигнута за ${getTargetMonth()} �
 // console.log(`Цель заработать ${mission} рублей`);
 console.log(`Бюджет на день ${budgetDay}`);
 //9)
-let getStatusIncome = function () {
+const getStatusIncome = function () {
     if (budgetDay >= 1200) {
         return ('У вас высокий уровень дохода')
     } else if (budgetDay >= 600 && budgetDay <1200 ) {
