@@ -122,6 +122,6 @@ appData.getInfoDeposit()
 
 // 2)
 
-let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1))
+let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1)).join(',')
 
-console.log(expense.join(', '));
+console.log(expense);
