@@ -121,8 +121,7 @@ appData.getInfoDeposit()
 
 
 // 2)
-let a = []
-for (let i = 0; i < appData.addExpenses.length; i++) {
-    a[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1)
-}
-console.log(a.join(', '));
+
+let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1))
+
+console.log(expense.join(', '));
