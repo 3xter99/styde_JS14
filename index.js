@@ -1,3 +1,53 @@
+
+
+const calculate = document.getElementById('start');
+const incomeAdd = document.getElementsByTagName('button')[0];
+const expensesAdd = document.getElementsByTagName('button')[1];
+const depositCheck = document.querySelector('#deposit-check');
+const additionalIncomeItem = document.querySelectorAll('.additional_income-item');
+const budgetMonthValue = document.querySelector('.budget_month-value');
+const budgetDayValue = document.querySelector('.budget_day-value');
+const expensesMonthValue = document.querySelector('.expenses_month-value');
+const additionalIncomeValue = document.querySelector('.additional_income-value');
+const additionalExpensesValue = document.querySelector('.additional_expenses-value');
+const incomePeriodValue = document.querySelector('.income_period-value');
+const targetMonthValue = document.querySelector('.target_month-value');
+
+const salaryAmount = document.querySelector('.salary-amount');
+const incomeTitle = document.querySelector('.income-title');
+const incomeAmount = document.querySelector('.income-amount');
+const expensesTitle = document.querySelector('.expenses-title');
+const expensesAmount = document.querySelector('.expenses-amount');
+const additionalExpensesItem = document.querySelector('.additional_expenses-item');
+const periodSelect = document.querySelector('.period-select');
+
+console.log(calculate);
+console.log(incomeAdd);
+console.log(expensesAdd);
+console.log(depositCheck);
+console.log(additionalIncomeItem);
+console.log(budgetMonthValue);
+console.log(budgetDayValue);
+console.log(expensesMonthValue);
+console.log(additionalIncomeValue);
+console.log(additionalExpensesValue);
+console.log(incomePeriodValue);
+console.log(targetMonthValue);
+console.log(salaryAmount);
+console.log(incomeTitle);
+console.log(incomeAmount);
+console.log(expensesTitle);
+console.log(expensesAmount);
+console.log(additionalExpensesItem);
+console.log(periodSelect);
+
+
+
+
+
+
+
+
 const isNumber = function(n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
 }
