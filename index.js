@@ -188,6 +188,7 @@ let appData = {
 start.disabled = true
 salaryAmount.addEventListener('input', function (event) {
     console.log(event);
+    salaryAmount.value = salaryAmount.value.replace(/[^0-9]/,'');
     start.disabled = event.target.value === ''
 })
 start.addEventListener('click', appData.start)
