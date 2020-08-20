@@ -23,6 +23,7 @@ let expensesItems = document.querySelectorAll('.expenses-items')
 const additionalExpenses = document.querySelector('.additional_expenses');
 const periodSelect = document.querySelector('.period-select');
 let incomeItem = document.querySelectorAll('.income-items');
+let titlePeriodAmount = document.querySelector('.period-amount')
 
 
 
@@ -45,22 +46,18 @@ let appData = {
     deposit: false,
     percentDeposit: 0,
     moneyDeposit: 0,
-    start: function() {
-        if (salaryAmount.value === '') {
-            alert('Ошибка, поле "месячный доход" должно быть заполнено')
-        }
-
-        appData.budget = +salaryAmount.value;
-
-        appData.getExpenses()
-        appData.getIncome();
-        appData.getIncomeMonth()
-        appData.getExpensesMonth();
-        appData.getAddExpenses();
-        appData.getAddIncome();
-        appData.getBudget();
-
-        appData.showResult();
+    start: function(event) {
+        if (salaryAmount.value !== '') {
+            appData.budget = +salaryAmount.value;
+            appData.getExpenses()
+            appData.getIncome();
+            appData.getIncomeMonth()
+            appData.getExpensesMonth();
+            appData.getAddExpenses();
+            appData.getAddIncome();
+            appData.getBudget();
+            appData.showResult();
+        } else event.preventDefault();
 
 
 
@@ -91,7 +88,12 @@ let appData = {
         additionalExpensesValue.value = appData.addExpenses.join(', ');
         additionalIncomeValue.value = appData.addIncome.join(', ')
         targetMonthValue.value = appData.getTargetMonth();
+
+        periodSelect.addEventListener('input', function () {
+            incomePeriodValue.value = appData.calcPeriod();
+        })
         incomePeriodValue.value = appData.calcPeriod();
+
     },
     addExpensesBlock: function() {
         //клоннируем элемент expensesItem и вставляем его хуй пойми куда, вроде перед кнопкой
@@ -177,10 +179,15 @@ let appData = {
     }
 };
 
+
+
 start.addEventListener('click', appData.start)
 
 expensesPlus.addEventListener('click', appData.addExpensesBlock)
 incomePlus.addEventListener('click', appData.addIncomeBlock)
+periodSelect.addEventListener('input', function () {
+    titlePeriodAmount.textContent = periodSelect.value
+})
 
 // if (appData.getTargetMonth() > 0) {
 //     console.log('Цель будет достигнута за ' + Math.ceil(appData.getTargetMonth()) + ' месяцев')
