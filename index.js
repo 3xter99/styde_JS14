@@ -14,6 +14,8 @@ const incomePeriodValue = document.getElementsByClassName('income_period-value')
 const targetMonthValue = document.getElementsByClassName('target_month-value')[0];
 const additionalExpensesItem = document.querySelector('.additional_expenses-item');
 const targetAmount = document.querySelector('.target-amount');
+let incomeAmount = document.querySelector('.income-amount');
+let expensesAmount = document.querySelector('.expenses-amount');
 
 
 const salaryAmount = document.querySelector('.salary-amount');
@@ -191,6 +193,29 @@ salaryAmount.addEventListener('input', function (event) {
     salaryAmount.value = salaryAmount.value.replace(/[^0-9]/,'');
     start.disabled = event.target.value === ''
 })
+
+
+//запрет введения букв___________________________
+incomeAmount.addEventListener('input', function () {
+    incomeAmount.value = incomeAmount.value.replace(/[^0-9]/,'');
+})
+expensesAmount.addEventListener('input', function () {
+    expensesAmount.value = expensesAmount.value.replace(/[^0-9]/,'');
+})
+targetAmount.addEventListener('input', function () {
+    targetAmount.value = targetAmount.value.replace(/[^0-9]/,'');
+})
+//______________________________
+//\s
+incomeTitle.addEventListener[0]('input', function (event) {
+    event.target.value = event.target.value.replace(/[^а-я]/,'');
+})
+additionalIncomeItem[0].addEventListener('input', function (event) {
+    console.log('lsfjwhfjebf')
+    event.target.value = event.target.value.replace(/[^а-я]/,'');
+})
+
+
 start.addEventListener('click', appData.start)
 
 expensesPlus.addEventListener('click', appData.addExpensesBlock)
