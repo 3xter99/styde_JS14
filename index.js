@@ -46,8 +46,9 @@ let appData = {
     deposit: false,
     percentDeposit: 0,
     moneyDeposit: 0,
-    start: function(event) {
-        if (salaryAmount.value !== '') {
+    start: function() {
+
+
             appData.budget = +salaryAmount.value;
             appData.getExpenses()
             appData.getIncome();
@@ -57,7 +58,7 @@ let appData = {
             appData.getAddIncome();
             appData.getBudget();
             appData.showResult();
-        } else event.preventDefault();
+
 
 
 
@@ -98,6 +99,8 @@ let appData = {
     addExpensesBlock: function() {
         //клоннируем элемент expensesItem и вставляем его хуй пойми куда, вроде перед кнопкой
         let cloneExpensesItem = expensesItems[0].cloneNode(true)
+        cloneExpensesItem.querySelector('.expenses-title').value = '';
+        cloneExpensesItem.querySelector('.expenses-amount').value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus)
         expensesItems = document.querySelectorAll('.expenses-items')
         if (expensesItems.length === 3) {
@@ -107,6 +110,8 @@ let appData = {
     },
     addIncomeBlock: function() {
         let cloneIncomeItem = incomeItem[0].cloneNode(true)
+        cloneIncomeItem.querySelector('.income-title').value = '';
+        cloneIncomeItem.querySelector('.income-amount').value = '';
         incomeItem[0].parentNode.insertBefore(cloneIncomeItem, incomePlus)
         incomeItem = document.querySelectorAll('.income-items');
         if (incomeItem.length === 3) {
@@ -180,7 +185,11 @@ let appData = {
 };
 
 
-
+start.disabled = true
+salaryAmount.addEventListener('input', function (event) {
+    console.log(event);
+    start.disabled = event.target.value === ''
+})
 start.addEventListener('click', appData.start)
 
 expensesPlus.addEventListener('click', appData.addExpensesBlock)
@@ -194,10 +203,6 @@ periodSelect.addEventListener('input', function () {
 // } else {
 //     console.log('Цель не будет достигнута')
 // }
-
-
-
-
 
 //
 // for( let key in appData ) {
