@@ -22,7 +22,8 @@ const expensesTitle = document.querySelector('.expenses-title');
 let expensesItems = document.querySelectorAll('.expenses-items')
 const additionalExpenses = document.querySelector('.additional_expenses');
 const periodSelect = document.querySelector('.period-select');
-const incomeItem = document.querySelectorAll('.income-items');
+let incomeItem = document.querySelectorAll('.income-items');
+
 
 
 const isNumber = function(n) {
@@ -53,6 +54,7 @@ let appData = {
 
         appData.getExpenses()
         appData.getIncome();
+        appData.getIncomeMonth()
         appData.getExpensesMonth();
         appData.getAddExpenses();
         appData.getAddIncome();
@@ -101,6 +103,14 @@ let appData = {
 
         }
     },
+    addIncomeBlock: function() {
+        let cloneIncomeItem = incomeItem[0].cloneNode(true)
+        incomeItem[0].parentNode.insertBefore(cloneIncomeItem, incomePlus)
+        incomeItem = document.querySelectorAll('.income-items');
+        if (incomeItem.length === 3) {
+            incomePlus.style.display = 'none';
+        }
+    },
     getExpenses: function() {
         expensesItems.forEach(function (item) {
             let itemExpenses = item.querySelector('.expenses-title').value;
@@ -112,24 +122,20 @@ let appData = {
     },
     getIncome: function() {
         //это дз, исправить как в getExpenses
+        incomeItem.forEach(function (item) {
+            let itemIncome = item.querySelector('.income-title').value;
+            let cashIncome = item.querySelector('.income-amount').value;
+            if (itemIncome !== '' && cashIncome !== '') {
+                appData.income[itemIncome] = cashIncome;
+            }
+        })
 
-        if (confirm('Есть ли у вас доп заработок?')){
-            let itemIncome
-            do {
-                itemIncome = prompt('Какой у Вас есть доп заработок?', 'Таксую')
-            } while (!Number.isNaN(Number(itemIncome)))
-
-            let cashIncome;
-            do {
-                cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000)
-            } while (!isNumber(cashIncome))
-
-            appData.income[itemIncome] = cashIncome
-        }
-
+    },
+    getIncomeMonth: function() {
         for (let key in appData.income) {
             appData.incomeMonth += +appData.income[key];
         }
+        console.log(appData.incomeMonth);
     },
     getExpensesMonth: function() {
         let sum = 0;
@@ -174,6 +180,7 @@ let appData = {
 start.addEventListener('click', appData.start)
 
 expensesPlus.addEventListener('click', appData.addExpensesBlock)
+incomePlus.addEventListener('click', appData.addIncomeBlock)
 
 // if (appData.getTargetMonth() > 0) {
 //     console.log('Цель будет достигнута за ' + Math.ceil(appData.getTargetMonth()) + ' месяцев')
