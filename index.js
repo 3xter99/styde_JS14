@@ -16,11 +16,13 @@ const additionalExpensesItem = document.querySelector('.additional_expenses-item
 const targetAmount = document.querySelector('.target-amount');
 let incomeAmount = document.querySelector('.income-amount');
 let expensesAmount = document.querySelector('.expenses-amount');
+let placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
+let placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
 
 
 const salaryAmount = document.querySelector('.salary-amount');
 const incomeTitle = document.querySelector('.income-title');
-const expensesTitle = document.querySelector('.expenses-title');
+let expensesTitle = document.querySelector('.expenses-title');
 let expensesItems = document.querySelectorAll('.expenses-items')
 const additionalExpenses = document.querySelector('.additional_expenses');
 const periodSelect = document.querySelector('.period-select');
@@ -60,9 +62,6 @@ let appData = {
             appData.getAddIncome();
             appData.getBudget();
             appData.showResult();
-
-
-
 
     },
     getAddExpenses: function() {
@@ -105,9 +104,9 @@ let appData = {
         cloneExpensesItem.querySelector('.expenses-amount').value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus)
         expensesItems = document.querySelectorAll('.expenses-items')
+
         if (expensesItems.length === 3) {
             expensesPlus.style.display = 'none';
-
         }
     },
     addIncomeBlock: function() {
@@ -161,15 +160,15 @@ let appData = {
     getTargetMonth: function() {
         return Math.floor(targetAmount.value / appData.budgetMonth);
     },
-    getStatusIncome: function() {
-        if(appData.budgetDay < 300) {
-            return('Низкий уровень дохода');
-        } else if (appData.budgetDay <=800) {
-            return('Средний уровень дохода');
-        } else {
-            return('Высокий уровень дохода');
-        }
-    },
+    // getStatusIncome: function() {
+    //     if(appData.budgetDay < 300) {
+    //         return('Низкий уровень дохода');
+    //     } else if (appData.budgetDay <=800) {
+    //         return('Средний уровень дохода');
+    //     } else {
+    //         return('Высокий уровень дохода');
+    //     }
+    // },
     getInfoDeposit: function () {
         if (appData.deposit) {
             do {
@@ -189,32 +188,30 @@ let appData = {
 
 start.disabled = true
 salaryAmount.addEventListener('input', function (event) {
-    console.log(event);
+    // console.log(event);
     salaryAmount.value = salaryAmount.value.replace(/[^0-9]/,'');
     start.disabled = event.target.value === ''
 })
 
 
-//запрет введения букв___________________________
-incomeAmount.addEventListener('input', function () {
-    incomeAmount.value = incomeAmount.value.replace(/[^0-9]/,'');
-})
-expensesAmount.addEventListener('input', function () {
-    expensesAmount.value = expensesAmount.value.replace(/[^0-9]/,'');
-})
-targetAmount.addEventListener('input', function () {
-    targetAmount.value = targetAmount.value.replace(/[^0-9]/,'');
-})
-//______________________________
-//\s
-incomeTitle.addEventListener[0]('input', function (event) {
-    event.target.value = event.target.value.replace(/[^а-я]/,'');
-})
-additionalIncomeItem[0].addEventListener('input', function (event) {
-    console.log('lsfjwhfjebf')
-    event.target.value = event.target.value.replace(/[^а-я]/,'');
+//запрет введения букв и цифр___________________________
+
+placeholderSum.forEach((item) => {
+    item.addEventListener('input', function () {
+        console.log(item.value)
+        item.value = item.value.replace(/[^0-9]/, '');
+    })
 })
 
+//\s
+console.log(placeholderName);
+placeholderName.forEach((item) => {
+    item.addEventListener('input', function () {
+        console.log(item.value)
+        item.value = item.value.replace(/[^а-яА-Я]/,'');
+    })
+})
+//________________________________
 
 start.addEventListener('click', appData.start)
 
@@ -237,9 +234,6 @@ periodSelect.addEventListener('input', function () {
 
 
 appData.getInfoDeposit()
-
-
-// 2)
 
 let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1)).join(',')
 
