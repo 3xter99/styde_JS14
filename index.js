@@ -105,6 +105,17 @@ let appData = {
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus)
         expensesItems = document.querySelectorAll('.expenses-items')
 
+        //проверка клона на буквы и цифры_______________________
+        let placeholderName = cloneExpensesItem.querySelector('.expenses-title');
+        placeholderName.addEventListener('input', () => {
+            placeholderName.value = placeholderName.value.replace(/[^А-Яа-я ,.]/,'');
+        })
+        let placeholderSum = cloneExpensesItem.querySelector('.expenses-amount');
+        placeholderSum.addEventListener('input', () => {
+            placeholderSum.value = placeholderSum.value.replace(/[^0-9]/,'');
+        })
+        //_____________________________________________________
+
         if (expensesItems.length === 3) {
             expensesPlus.style.display = 'none';
         }
@@ -115,6 +126,18 @@ let appData = {
         cloneIncomeItem.querySelector('.income-amount').value = '';
         incomeItem[0].parentNode.insertBefore(cloneIncomeItem, incomePlus)
         incomeItem = document.querySelectorAll('.income-items');
+        //проверка клона на буквы и цифры_______________________
+        let placeholderName = cloneIncomeItem.querySelector('.income-title');
+        placeholderName.addEventListener('input', () => {
+            placeholderName.value = placeholderName.value.replace(/[^А-Яа-я ,.]/,'');
+        })
+        let placeholderSum = cloneIncomeItem.querySelector('.income-amount');
+        placeholderSum.addEventListener('input', () => {
+            placeholderSum.value = placeholderSum.value.replace(/[^0-9]/,'');
+        })
+        //_______________________________________________________
+
+
         if (incomeItem.length === 3) {
             incomePlus.style.display = 'none';
         }
@@ -206,9 +229,10 @@ placeholderSum.forEach((item) => {
 //\s
 console.log(placeholderName);
 placeholderName.forEach((item) => {
+    placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
     item.addEventListener('input', function () {
         console.log(item.value)
-        item.value = item.value.replace(/[^а-яА-Я]/,'');
+        item.value = item.value.replace(/[^А-Яа-я ,.]/,'');
     })
 })
 //________________________________
