@@ -28,6 +28,7 @@ const additionalExpenses = document.querySelector('.additional_expenses');
 const periodSelect = document.querySelector('.period-select');
 let incomeItem = document.querySelectorAll('.income-items');
 let titlePeriodAmount = document.querySelector('.period-amount')
+let cancel = document.getElementById('cancel')
 
 
 
@@ -60,7 +61,9 @@ let appData = {
             this.getAddIncome();
             this.getBudget();
             this.showResult();
-        console.log(this)
+            this.blockInput()
+            this.resetButton()
+
     },
     getAddExpenses: function() {
         let addExpenses = additionalExpensesItem.value.split(',')
@@ -73,13 +76,13 @@ let appData = {
 
     },
     getAddIncome: function() {
-        additionalIncomeItem.forEach(function (item) {
+        additionalIncomeItem.forEach( item => {
             let itemValue = item.value.trim();
             if (itemValue !== ''){
                 this.addIncome.push(itemValue)
                 console.log(this)
             }
-        }.bind(appData))
+        }, this)
     },
     showResult: function() {
         budgetMonthValue.value = this.budgetMonth;
@@ -90,16 +93,9 @@ let appData = {
         targetMonthValue.value = this.getTargetMonth();
 
 
-        const self = this;
-
-        periodSelect.addEventListener('input', function () {
-            incomePeriodValue.value = self.calcPeriod()
-        })
-
-
-
-
-
+        periodSelect.addEventListener('input', () => {
+            incomePeriodValue.value = this.calcPeriod()
+        }, this)
         incomePeriodValue.value = this.calcPeriod();
 
     },
@@ -149,23 +145,23 @@ let appData = {
         }
     },
     getExpenses: function() {
-        expensesItems.forEach(function (item) {
+        expensesItems.forEach(item => {
             let itemExpenses = item.querySelector('.expenses-title').value;
             let cashExpenses = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = cashExpenses;
             }
-        }.bind(appData))
+        }, this)
     },
     getIncome: function() {
         //это дз, исправить как в getExpenses
-        incomeItem.forEach(function (item) {
+        incomeItem.forEach(item => {
             let itemIncome = item.querySelector('.income-title').value;
             let cashIncome = item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashIncome !== '') {
                 this.income[itemIncome] = cashIncome;
             }
-        }.bind(appData))
+        }, this)
 
     },
     getIncomeMonth: function() {
@@ -212,6 +208,28 @@ let appData = {
     calcPeriod: function () {
         console.log(this)
         return this.budgetMonth * periodSelect.value;
+    },
+
+    blockInput: function () {
+        // additionalExpensesItem.setAttribute("readonly", "readonly")
+        // placeholderName.forEach(item => {
+        //     item.setAttribute("readonly", "readonly")
+        // })
+        // placeholderSum.forEach(item => {
+        //     item.setAttribute("readonly", "readonly")
+        // })
+        additionalExpensesItem.setAttribute("disabled", "disabled")
+        placeholderName.forEach(item => {
+            item.setAttribute("disabled", "disabled")
+        })
+        placeholderSum.forEach(item => {
+            item.setAttribute("disabled", "disabled")
+        })
+    },
+    resetButton: function () {
+        cancel.style.display = "block"
+        start.style.display = 'none'
+
     }
 };
 
@@ -253,5 +271,32 @@ periodSelect.addEventListener('input', function () {
 })
 
 appData.getInfoDeposit()
+
+cancel.addEventListener('click', function () {
+        this.budget = 0
+        this.budgetDay = 0
+        this.budgetMonth = 0
+        this.expensesMonth = 0
+        this.income = {}
+        this.incomeMonth = 0
+        this.addIncome = []
+        this.expenses = {}
+        this.addExpenses = []
+        this.deposit = false
+        this.percentDeposit = 0
+        this.moneyDeposit = 0
+    salaryAmount.textContent = ''
+    additionalExpensesItem.setAttribute("disabled", "")
+    placeholderName.forEach(item => {
+        item.setAttribute("disabled", "")
+    })
+    placeholderSum.forEach(item => {
+        item.setAttribute("disabled", "")
+    })
+    cancel.style.display = "none"
+    start.style.display = 'block'
+
+    console.log(this)
+}.bind(appData))
 
 let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1)).join(',')
