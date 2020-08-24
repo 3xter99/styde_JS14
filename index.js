@@ -211,6 +211,8 @@ let appData = {
     },
 
     blockInput: function () {
+        placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
+        placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
 
         additionalExpensesItem.setAttribute("disabled", "disabled")
         placeholderName.forEach(item => {
@@ -224,6 +226,47 @@ let appData = {
         cancel.style.display = "block"
         start.style.display = 'none'
 
+    },
+    rest: function () {
+        placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
+        placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
+        this.budget = 0
+        this.budgetDay = 0
+        this.budgetMonth = 0
+        this.expensesMonth = 0
+        this.income = {}
+        this.incomeMonth = 0
+        this.addIncome = []
+        this.expenses = {}
+        this.addExpenses = []
+        this.deposit = false
+        this.percentDeposit = 0
+        this.moneyDeposit = 0
+
+
+        salaryAmount.textContent = ''
+        additionalExpensesItem.removeAttribute('disabled')
+        additionalExpensesItem.value = ''
+        placeholderName.forEach(item => {
+            item.removeAttribute('disabled')
+            item.value = ''
+        })
+
+        placeholderSum.forEach(item => {
+            item.removeAttribute('disabled')
+            item.value = ''
+        })
+        cancel.style.display = "none"
+        start.style.display = 'block'
+
+        this.getExpenses()
+        this.getIncome();
+        this.getIncomeMonth()
+        this.getExpensesMonth();
+        this.getAddExpenses();
+        this.getAddIncome();
+        this.getBudget();
+        this.showResult();
     }
 };
 
@@ -266,44 +309,7 @@ periodSelect.addEventListener('input', function () {
 
 appData.getInfoDeposit()
 
-cancel.addEventListener('click', function () {
-        this.budget = 0
-        this.budgetDay = 0
-        this.budgetMonth = 0
-        this.expensesMonth = 0
-        this.income = {}
-        this.incomeMonth = 0
-        this.addIncome = []
-        this.expenses = {}
-        this.addExpenses = []
-        this.deposit = false
-        this.percentDeposit = 0
-        this.moneyDeposit = 0
-    salaryAmount.textContent = ''
-    additionalExpensesItem.removeAttribute('disabled')
-    placeholderName.forEach(item => {
-        item.removeAttribute('disabled')
-        item.textContent = ''
-    })
-    placeholderSum.forEach(item => {
-        item.removeAttribute('disabled')
-        item.textContent = ''
-    })
-    cancel.style.display = "none"
-    start.style.display = 'block'
 
-    this.getExpenses()
-    this.getIncome();
-    this.getIncomeMonth()
-    this.getExpensesMonth();
-    this.getAddExpenses();
-    this.getAddIncome();
-    this.getBudget();
-    this.showResult();
-
-
-
-    console.log(this)
-}.bind(appData))
+cancel.addEventListener('click', appData.rest.bind(appData))
 
 let expense = appData.addExpenses.map(item => item[0].toUpperCase() + item.slice(1)).join(',')
