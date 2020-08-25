@@ -254,6 +254,17 @@ AppData.prototype.rest = function () {
         item.removeAttribute('disabled')
         item.value = ''
     })
+    incomeItem = document.querySelectorAll('.income-items')
+    incomeItem[1].remove()
+    incomeItem[2].remove()
+    incomePlus.style.display = '';
+
+    expensesItems = document.querySelectorAll('.expenses-items')
+    expensesItems[1].remove()
+    expensesItems[2].remove()
+    expensesPlus.style.display = '';
+
+    console.log(incomeItem);
     cancel.style.display = "none"
     start.style.display = 'block'
 
