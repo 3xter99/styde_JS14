@@ -255,13 +255,17 @@ AppData.prototype.rest = function () {
         item.value = ''
     })
     incomeItem = document.querySelectorAll('.income-items')
-    incomeItem[1].remove()
-    incomeItem[2].remove()
+    incomeItem.forEach( (item, index) => {
+        if (index >= 1) {
+        item.remove() }
+    })
     incomePlus.style.display = '';
 
     expensesItems = document.querySelectorAll('.expenses-items')
-    expensesItems[1].remove()
-    expensesItems[2].remove()
+    expensesItems.forEach( (item, index) => {
+        if (index >= 1) {
+            item.remove() }
+    })
     expensesPlus.style.display = '';
 
     console.log(incomeItem);
