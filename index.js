@@ -25,7 +25,7 @@ let incomeItem = document.querySelectorAll('.income-items');
 let titlePeriodAmount = document.querySelector('.period-amount')
 let cancel = document.getElementById('cancel')
 const depositCheck = document.getElementById('deposit-check')
-
+const depositCheckmark = document.querySelector('.deposit-checkmark')
 const depositBank = document.querySelector('.deposit-bank')
 const depositAmount = document.querySelector('.deposit-amount')
 const depositPercent = document.querySelector('.deposit-percent')
@@ -270,10 +270,15 @@ class AppData {
 
 
         depositPercent.removeAttribute('disabled')
+        depositBank.value = ''
+        depositBank.style.display = 'none'
+        depositAmount.style.display = 'none'
+        // depositCheck.innerText = ''
+        depositAmount.value = ''
         depositPercent.value = ''
         depositPercent.style.display = 'none'
+        this.deposit = false
 
-        depositBank.value = ''
 
 
         salaryAmount.textContent = ''
@@ -327,7 +332,7 @@ class AppData {
                 this.moneyDeposit = depositAmount.value
         }
     };
-    asd() {
+    checkPercent() {
         depositPercent.value = depositPercent.value.replace(/[^0-9]/, '');
         if (depositPercent.value > 100) {
             depositPercent.value = ''
@@ -355,7 +360,7 @@ class AppData {
             depositAmount.style.display = 'inline-block'
             this.deposit = true
             depositBank.addEventListener('change', this.changePercent)
-            depositPercent.addEventListener('input', appData.asd.bind(appData))
+            depositPercent.addEventListener('input', appData.checkPercent.bind(appData))
 
         } else {
             depositBank.style.display = 'none'
