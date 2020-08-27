@@ -51,15 +51,15 @@ class AppData {
         this.budget = +salaryAmount.value;
         this.getExpInc()
         this.getExpensesMonth();
-        // this.getAddExpenses();
-        // this.getAddIncome();
         this.getAddIncExp('addExpenses', true);
         this.getAddIncExp('addIncome', false);
         this.getInfoDeposit()
+
         this.getBudget();
         this.showResult();
         this.blockInput()
         this.resetButton()
+
 
     };
 
@@ -234,6 +234,8 @@ class AppData {
         placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
 
         additionalExpensesItem.setAttribute("disabled", "disabled")
+        depositPercent.setAttribute("disabled", "disabled")
+
         placeholderName.forEach(item => {
             item.setAttribute("disabled", "disabled")
         })
@@ -267,9 +269,18 @@ class AppData {
         start.disabled = true
 
 
+        depositPercent.removeAttribute('disabled')
+        depositPercent.value = ''
+        depositPercent.style.display = 'none'
+
+        depositBank.value = ''
+
+
         salaryAmount.textContent = ''
         additionalExpensesItem.removeAttribute('disabled')
         additionalExpensesItem.value = ''
+
+
         placeholderName.forEach(item => {
             item.removeAttribute('disabled')
             item.value = ''
@@ -280,6 +291,7 @@ class AppData {
             item.removeAttribute('disabled')
             item.value = ''
         })
+
         incomeItem = document.querySelectorAll('.income-items')
         incomeItem.forEach((item, index) => {
             if (index >= 1) {
@@ -301,13 +313,9 @@ class AppData {
         cancel.style.display = "none"
         start.style.display = 'block'
 
-        // this.getExpenses()
-        // this.getIncome();
+
         this.getExpInc()
-        // this.getIncomeMonth()
         this.getExpensesMonth();
-        // this.getAddExpenses();
-        // this.getAddIncome();
         this.getAddIncExp()
         this.getBudget();
         this.showResult();
@@ -315,21 +323,25 @@ class AppData {
 
     getInfoDeposit () {
         if (this.deposit) {
-            if (this.isNumber(depositPercent.value) && depositPercent.value <= 100) {
-
                 this.percentDeposit = depositPercent.value
                 this.moneyDeposit = depositAmount.value
-            } else {
-                alert('Введите корректное значение в поле проценты')
-            }
-
         }
     };
+    asd() {
+        depositPercent.value = depositPercent.value.replace(/[^0-9]/, '');
+        if (depositPercent.value > 100) {
+            depositPercent.value = ''
+        }
+    }
+
     changePercent() {
+
         const valueSelect = this.value;
         if (valueSelect === 'other') {
+
             depositPercent.style.display = 'inline-block'
             depositPercent.value = ''
+
 
         } else {
             depositPercent.value = valueSelect
@@ -342,14 +354,16 @@ class AppData {
             depositBank.style.display = 'inline-block'
             depositAmount.style.display = 'inline-block'
             this.deposit = true
-
             depositBank.addEventListener('change', this.changePercent)
+            depositPercent.addEventListener('input', appData.asd.bind(appData))
 
         } else {
             depositBank.style.display = 'none'
             depositAmount.style.display = 'none'
             depositBank.value = ''
             depositAmount.value = ''
+            depositPercent.value = ''
+            depositPercent.style.display = 'none'
             this.deposit = false
 
             depositBank.removeEventListener('change', this.changePercent)
