@@ -29,6 +29,8 @@ const depositCheckmark = document.querySelector('.deposit-checkmark')
 const depositBank = document.querySelector('.deposit-bank')
 const depositAmount = document.querySelector('.deposit-amount')
 const depositPercent = document.querySelector('.deposit-percent')
+// let isLoad = JSON.parse(localStorage.getItem('word'))
+// console.log(isLoad);
 
 
 class AppData {
@@ -48,6 +50,7 @@ class AppData {
     }
 
     start () {
+
         this.budget = +salaryAmount.value;
         this.getExpInc()
         this.getExpensesMonth();
@@ -56,12 +59,66 @@ class AppData {
         this.getInfoDeposit()
 
         this.getBudget();
+
         this.showResult();
         this.blockInput()
         this.resetButton()
+        this.local()
+
 
 
     };
+    local()  {
+        let isLoad = JSON.stringify(localStorage.setItem('word', 'true'))
+
+        JSON.stringify(localStorage.setItem('budgetMonthValue', this.budgetMonth));
+        JSON.stringify(localStorage.setItem('budgetDayValue', this.budgetDay));
+        JSON.stringify(localStorage.setItem('expensesMonthValue', this.expensesMonth));
+        localStorage.setItem('additionalExpensesValue', JSON.stringify(this.addExpenses.join(', ')))
+        localStorage.setItem('additionalIncomeValue', JSON.stringify(this.addIncome.join(', ')));
+        JSON.stringify(localStorage.setItem('targetMonthValue', this.getTargetMonth()));
+        JSON.stringify(localStorage.setItem('incomePeriodValue', this.calcPeriod()));
+
+        Object.keys(localStorage).forEach(item => {
+            document.cookie = `${item} = ${JSON.parse(localStorage.getItem(item))}`
+        })
+
+
+        // const obj = {
+        //     'word' : true,
+        //     'budgetMonthValue' : budgetMonthValue.value,
+        //     'budgetDayValue' : budgetDayValue.value,
+        //     'expensesMonthValue' : expensesMonthValue.value,
+        //     'additionalExpensesValue' : additionalExpensesValue.value,
+        //     'additionalIncomeValue' : additionalIncomeValue.value,
+        //     'targetMonthValue' : targetMonthValue.value,
+        //     'incomePeriodValue' : incomePeriodValue.value
+        // }
+        //
+        // for (let key in obj) {
+        //     document.cookie = `${key} = ${obj[key]}`
+        // }
+        console.log(this.get_all_cookies());
+        console.log(Object.keys(this.get_all_cookies()));
+        console.log(Object.keys(localStorage))
+
+
+
+
+    }
+    get_all_cookies() {
+        let cookies = { };
+        if (document.cookie && document.cookie !== '') {
+            let split = document.cookie.split(';');
+            for (let i = 0; i < split.length; i++) {
+                let name_value = split[i].split("=");
+                name_value[0] = name_value[0].replace(/^ /, '');
+                cookies[decodeURIComponent(name_value[0])] = decodeURIComponent(name_value[1]);
+            }
+        }
+        return cookies;
+    }
+
 
     isNumber (n) {
         return !isNaN(parseFloat(n)) && isFinite(n)
@@ -84,7 +141,9 @@ class AppData {
 
 
     showResult  () {
+
         budgetMonthValue.value = this.budgetMonth;
+
         budgetDayValue.value = this.budgetDay;
         expensesMonthValue.value = this.expensesMonth;
         additionalExpensesValue.value = this.addExpenses.join(', ');
@@ -97,52 +156,6 @@ class AppData {
 
     };
 
-    // addExpensesBlock (item) {
-    //     console.log(item.target.className)
-    //     //клоннируем элемент expensesItem и вставляем его хуй пойми куда, вроде перед кнопкой
-    //     const cloneExpensesItem = expensesItems[0].cloneNode(true)
-    //     cloneExpensesItem.querySelector('.expenses-title').value = '';
-    //     cloneExpensesItem.querySelector('.expenses-amount').value = '';
-    //     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus)
-    //     expensesItems = document.querySelectorAll('.expenses-items')
-    //
-    //     //проверка клона на буквы и цифры_______________________
-    //     const placeholderName = cloneExpensesItem.querySelector('.expenses-title');
-    //     placeholderName.addEventListener('input', () => {
-    //         placeholderName.value = placeholderName.value.replace(/[^А-Яа-я ,.]/, '');
-    //     })
-    //     const placeholderSum = cloneExpensesItem.querySelector('.expenses-amount');
-    //     placeholderSum.addEventListener('input', () => {
-    //         placeholderSum.value = placeholderSum.value.replace(/[^0-9]/, '');
-    //     })
-    //     //_____________________________________________________
-    //
-    //     if (expensesItems.length === 3) {
-    //         expensesPlus.style.display = 'none';
-    //     }
-    // };
-    //
-    // addIncomeBlock (item) {
-    //     item.target.className.split(' ')[1].split('_')[0];
-    //     const cloneIncomeItem = incomeItem[0].cloneNode(true)
-    //     cloneIncomeItem.querySelector('.income-title').value = '';
-    //     cloneIncomeItem.querySelector('.income-amount').value = '';
-    //     incomeItem[0].parentNode.insertBefore(cloneIncomeItem, incomePlus)
-    //     incomeItem = document.querySelectorAll('.income-items');
-    //     //проверка клона на буквы и цифры_______________________
-    //     const placeholderName = cloneIncomeItem.querySelector('.income-title');
-    //     placeholderName.addEventListener('input', () => {
-    //         placeholderName.value = placeholderName.value.replace(/[^А-Яа-я ,.]/, '');
-    //     })
-    //     const placeholderSum = cloneIncomeItem.querySelector('.income-amount');
-    //     placeholderSum.addEventListener('input', () => {
-    //         placeholderSum.value = placeholderSum.value.replace(/[^0-9]/, '');
-    //     })
-    //     //_______________________________________________________
-    //     if (incomeItem.length === 3) {
-    //         incomePlus.style.display = 'none';
-    //     }
-    // };
 
     addIncExpBlock(item) {
 
@@ -213,17 +226,6 @@ class AppData {
 
         return this.budgetMonth <= 0 ? 0 : Math.floor(targetAmount.value / this.budgetMonth);
     };
-// AppData.prototype.getStatusIncome = function() {
-//     if(appData.budgetDay < 300) {
-//         return('Низкий уровень дохода');
-//     } else if (appData.budgetDay <=800) {
-//         return('Средний уровень дохода');
-//     } else {
-//         return('Высокий уровень дохода');
-//     }
-// };
-
-
 
     calcPeriod () {
         return this.budgetMonth * periodSelect.value;
@@ -318,6 +320,9 @@ class AppData {
         cancel.style.display = "none"
         start.style.display = 'block'
 
+        localStorage.clear()
+        this.deleteAllCookies()
+
 
         this.getExpInc()
         this.getExpensesMonth();
@@ -374,6 +379,16 @@ class AppData {
             depositBank.removeEventListener('change', this.changePercent)
         }
     };
+    deleteAllCookies() {
+        let cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i];
+            let eqPos = cookie.indexOf("=");
+            let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
 
 
     eventListener (){
@@ -390,6 +405,30 @@ class AppData {
                 item.value = item.value.replace(/[^0-9]/, '');
             })
         })
+
+        let asd = JSON.parse(localStorage.getItem('word'))
+        if (asd === true) {
+            this.blockInput()
+            this.resetButton()
+
+
+            budgetMonthValue.value = JSON.parse(localStorage.getItem('budgetMonthValue'))
+            budgetDayValue.value = JSON.parse(localStorage.getItem('budgetDayValue'))
+            expensesMonthValue.value = JSON.parse(localStorage.getItem('expensesMonthValue'))
+            additionalExpensesValue.value = JSON.parse(localStorage.getItem('additionalExpensesValue'))
+            additionalIncomeValue.value = JSON.parse(localStorage.getItem('additionalIncomeValue'))
+            targetMonthValue.value = JSON.parse(localStorage.getItem('targetMonthValue'))
+            incomePeriodValue.value = JSON.parse(localStorage.getItem('incomePeriodValue'))
+
+
+
+        }
+        for (let i = 0; i<= Object.keys(localStorage).length; i++) {
+            if (Object.keys(localStorage)[i] !== Object.keys(this.get_all_cookies())[i]) {
+                localStorage.clear()
+                this.deleteAllCookies()
+            }
+        }
 
 //\s
         placeholderName.forEach((item) => {
@@ -414,6 +453,7 @@ class AppData {
 
     }
 }
+
 
 const appData = new AppData();
 
