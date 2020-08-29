@@ -29,7 +29,7 @@ const depositCheckmark = document.querySelector('.deposit-checkmark')
 const depositBank = document.querySelector('.deposit-bank')
 const depositAmount = document.querySelector('.deposit-amount')
 const depositPercent = document.querySelector('.deposit-percent')
-// let isLoad = JSON.parse(localStorage.getItem('word'))
+let isLoad = JSON.parse(localStorage.getItem('word'))
 // console.log(isLoad);
 
 
@@ -69,7 +69,7 @@ class AppData {
 
     };
     local()  {
-        let isLoad = JSON.stringify(localStorage.setItem('word', 'true'))
+        isLoad = JSON.stringify(localStorage.setItem('word', 'true'))
 
         JSON.stringify(localStorage.setItem('budgetMonthValue', this.budgetMonth));
         JSON.stringify(localStorage.setItem('budgetDayValue', this.budgetDay));
@@ -407,11 +407,9 @@ class AppData {
         })
 
         let asd = JSON.parse(localStorage.getItem('word'))
-        if (asd === true) {
+        if (asd == true) {
             this.blockInput()
             this.resetButton()
-
-
             budgetMonthValue.value = JSON.parse(localStorage.getItem('budgetMonthValue'))
             budgetDayValue.value = JSON.parse(localStorage.getItem('budgetDayValue'))
             expensesMonthValue.value = JSON.parse(localStorage.getItem('expensesMonthValue'))
@@ -419,9 +417,6 @@ class AppData {
             additionalIncomeValue.value = JSON.parse(localStorage.getItem('additionalIncomeValue'))
             targetMonthValue.value = JSON.parse(localStorage.getItem('targetMonthValue'))
             incomePeriodValue.value = JSON.parse(localStorage.getItem('incomePeriodValue'))
-
-
-
         }
         for (let i = 0; i<= Object.keys(localStorage).length; i++) {
             if (Object.keys(localStorage)[i] !== Object.keys(this.get_all_cookies())[i]) {
