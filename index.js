@@ -427,6 +427,7 @@ class AppData {
             if (Object.keys(localStorage)[i] !== Object.keys(this.get_all_cookies())[i]) {
                 localStorage.clear()
                 this.deleteAllCookies()
+                this.rest()
             }
         }
 
