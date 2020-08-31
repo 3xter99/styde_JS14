@@ -100,6 +100,11 @@ class AppData {
         return cookies;
     }
 
+    getCookie (name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) return match[2];
+    }
+
 
     isNumber (n) {
         return !isNaN(parseFloat(n)) && isFinite(n)
@@ -401,17 +406,33 @@ class AppData {
             incomePeriodValue.value = JSON.parse(localStorage.getItem('incomePeriodValue'))
             // this.showResult()
         }
-        for (let i = 0; i<= Object.keys(localStorage).length; i++) {
-            if (Object.keys(localStorage)[i] !== Object.keys(this.get_all_cookies())[i]) {
-                localStorage.clear()
-                this.deleteAllCookies()
-                // this.rest()
-                console.log('Удачно')
-            }
-            // console.log(Object.keys(localStorage)[i]);
-            // console.log(Object.keys(this.get_all_cookies())[i]);
+        console.log(localStorage);
+        let keys = Object.keys(localStorage);
+        // console.log(this.getCookie(`fwerw`))
+        for (let key of keys) {
+
+            console.log(localStorage.getItem(`${key}`));
+            console.log(this.getCookie(`${key}`));
+            // if (localStorage.getItem(`${key}`) === this.getCookie(`${key}`)) {
+            //     localStorage.clear()
+            //     this.deleteAllCookies()
+            //     this.rest()
+            // }
 
         }
+
+        // Object.keys(localStorage).forEach(item => {
+        //     if (this.getCookie(`${item}`) !== JSON.parse(localStorage.getItem(`${item}`))) {
+        //         localStorage.clear()
+        //         this.deleteAllCookies()
+        //         this.rest()
+        //         console.log(this.getCookie(`${item}`))
+        //     }
+        // })
+
+
+
+
 
 //\s
         placeholderName.forEach((item) => {
