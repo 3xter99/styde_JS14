@@ -29,7 +29,7 @@ const depositCheckmark = document.querySelector('.deposit-checkmark')
 const depositBank = document.querySelector('.deposit-bank')
 const depositAmount = document.querySelector('.deposit-amount')
 const depositPercent = document.querySelector('.deposit-percent')
-let isLoad = JSON.parse(localStorage.getItem('word'))
+// let isLoad = JSON.parse(localStorage.getItem('word'))
 // console.log(isLoad);
 
 
@@ -69,7 +69,7 @@ class AppData {
 
     };
     local()  {
-        isLoad = JSON.stringify(localStorage.setItem('word', 'true'))
+        let isLoad = JSON.stringify(localStorage.setItem('word', 'true'))
 
         JSON.stringify(localStorage.setItem('budgetMonthValue', this.budgetMonth));
         JSON.stringify(localStorage.setItem('budgetDayValue', this.budgetDay));
@@ -78,33 +78,14 @@ class AppData {
         localStorage.setItem('additionalIncomeValue', JSON.stringify(this.addIncome.join(', ')));
         JSON.stringify(localStorage.setItem('targetMonthValue', this.getTargetMonth()));
         JSON.stringify(localStorage.setItem('incomePeriodValue', this.calcPeriod()));
-
+        // создание кук на основе localStorage
         Object.keys(localStorage).forEach(item => {
-            document.cookie = `${item} = ${JSON.parse(localStorage.getItem(item))}`
+            document.cookie = `${item} = ${JSON.parse(localStorage.getItem(item))}; expires=Tue, 19 Jan 2038 03:14:07 GMT`
         })
 
-
-        // const obj = {
-        //     'word' : true,
-        //     'budgetMonthValue' : budgetMonthValue.value,
-        //     'budgetDayValue' : budgetDayValue.value,
-        //     'expensesMonthValue' : expensesMonthValue.value,
-        //     'additionalExpensesValue' : additionalExpensesValue.value,
-        //     'additionalIncomeValue' : additionalIncomeValue.value,
-        //     'targetMonthValue' : targetMonthValue.value,
-        //     'incomePeriodValue' : incomePeriodValue.value
-        // }
-        //
-        // for (let key in obj) {
-        //     document.cookie = `${key} = ${obj[key]}`
-        // }
         console.log(this.get_all_cookies());
         console.log(Object.keys(this.get_all_cookies()));
         console.log(Object.keys(localStorage))
-
-
-
-
     }
     get_all_cookies() {
         let cookies = { };
@@ -407,6 +388,7 @@ class AppData {
         })
 
         let asd = JSON.parse(localStorage.getItem('word'))
+        console.log(asd)
         if (asd == true) {
             this.blockInput()
             this.resetButton()
@@ -417,13 +399,18 @@ class AppData {
             additionalIncomeValue.value = JSON.parse(localStorage.getItem('additionalIncomeValue'))
             targetMonthValue.value = JSON.parse(localStorage.getItem('targetMonthValue'))
             incomePeriodValue.value = JSON.parse(localStorage.getItem('incomePeriodValue'))
+            // this.showResult()
         }
         for (let i = 0; i<= Object.keys(localStorage).length; i++) {
             if (Object.keys(localStorage)[i] !== Object.keys(this.get_all_cookies())[i]) {
                 localStorage.clear()
                 this.deleteAllCookies()
-                this.rest()
+                // this.rest()
+                console.log('Удачно')
             }
+            // console.log(Object.keys(localStorage)[i]);
+            // console.log(Object.keys(this.get_all_cookies())[i]);
+
         }
 
 //\s
